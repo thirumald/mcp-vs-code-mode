@@ -14,7 +14,10 @@ All demos use the **same real MCP server**, the same Claude model (`claude-sonne
 | `demo2_codemode.mjs` | Demo 2a: Code Mode in **TypeScript** (`@utcp/code-mode` + `@utcp/mcp`) |
 | `demo2_codemode.py` | Demo 2b: Code Mode in **Python** (`code-mode` + `utcp-mcp`) |
 
-## Setup (already done in this folder)
+## Setup
+```bash
+git clone https://github.com/manojkanur/mcp-vs-code-mode.git && cd mcp-vs-code-mode
+```
 ```bash
 uv venv .venv && uv pip install -p .venv "mcp==2.3.0" anthropic                    # classic demo
 uv venv .venv-codemode && uv pip install -p .venv-codemode code-mode utcp utcp-mcp anthropic   # Python Code Mode
@@ -24,7 +27,7 @@ Python Code Mode gets its own venv because `utcp-mcp` requires `mcp<2`, which co
 
 ## Run (in each new terminal)
 ```bash
-cd "/Users/manojaidude/MCP 2.0"
+cd mcp-vs-code-mode
 export ANTHROPIC_API_KEY='your-key'
 
 .venv/bin/python demo1_classic.py              # Demo 1: Classic MCP
