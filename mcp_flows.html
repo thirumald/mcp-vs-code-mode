@@ -1,5 +1,9 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>MCP vs Code Mode Flows</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,600&display=swap">
 <style>
 /* Layout: one reading column; two flows stacked, each = diagram + "what to notice" notes, then the measured comparison */
@@ -7,6 +11,7 @@
   --bg: #f6f7f9; --panel: #ffffff; --fg: #1b1f27; --muted: #5b6372; --line: #dfe3ea;
   --old: #b4561f; --new: #1f6f6b; --code-bg: #eef1f5;
   --display: "Fraunces", Georgia, serif; --body: "IBM Plex Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+  color-scheme: light;
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
   --bg: #12151b; --panel: #1a1f27; --fg: #e6e9ef; --muted: #9aa3b2; --line: #2c333f;
@@ -14,8 +19,9 @@
 :root[data-theme="dark"] {
   --bg: #12151b; --panel: #1a1f27; --fg: #e6e9ef; --muted: #9aa3b2; --line: #2c333f;
   --old: #e08a55; --new: #5cc0b8; --code-bg: #222935; color-scheme: dark }
-body { background: var(--bg); color: var(--fg); font: 15px/1.6 var(--body);
-  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 32px 64px; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.6 var(--body);
+  padding: 32px 16px 64px; }
 main { max-width: 980px; margin: 0 auto; display: grid; gap: 40px; }
 h1, h2 { font-family: var(--display); text-wrap: balance; margin: 0; line-height: 1.2; }
 h1 { font-size: 2rem; }
@@ -30,6 +36,7 @@ section { display: grid; gap: 16px; }
 .old { --c: var(--old); } .new { --c: var(--new); }
 .diagram { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 16px; overflow-x: auto; }
 .diagram pre.mermaid { margin: 0; background: none; min-width: 640px; }
+.diagram svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
 .snippet { background: var(--code-bg); border-radius: 6px; padding: 12px 14px; overflow-x: auto; margin: 0; line-height: 1.5; }
 .notes { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; }
 .note { min-width: 0; padding: 12px 14px; border-top: 2px solid var(--c); background: var(--panel); }
@@ -45,7 +52,8 @@ td.num { font-variant-numeric: tabular-nums; font-family: var(--mono); }
 td.win { color: var(--new); font-weight: 600; }
 .foot { color: var(--muted); font-size: 0.88rem; margin: 0; }
 </style>
-
+</head>
+<body>
 <main>
   <header>
     <span class="tag">Same MCP server · same Claude model · same task</span>
@@ -164,3 +172,11 @@ return {"all": res, "best": best, "booking": b}</pre>
     <p class="foot">Model: claude-sonnet-5-5. Single runs, so expect different numbers on a rerun. In either language, Claude sometimes books inside the same code run (2 calls) and sometimes in a second step (3 calls). The trade-off: Code Mode needs a code sandbox, and the model has to write correct code. The Python package needed 4 compatibility fixes; see the README.</p>
   </section>
 </main>
+
+<script type="module">
+import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11.4.1/dist/mermaid.esm.min.mjs";
+const dark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+mermaid.initialize({ startOnLoad: true, securityLevel: "strict", theme: dark ? "dark" : "neutral" });
+</script>
+</body>
+</html>
